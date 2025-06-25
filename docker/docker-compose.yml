@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  roles-permissions-service:
+    build: .
+    container_name: roles-permissions-service
+    ports:
+      - "8080:8080"
+    networks:
+      - lavanet-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/roles_permissions_db
+      - SPRING_DATASOURCE_USERNAME=your-db-username
+      - SPRING_DATASOURCE_PASSWORD=your-db-password
+
+  postgres:
+    image: postgres:14
+    container_name: postgres-db
+    environment:
+      - POSTGRES_DB=roles_permissions_db
+      - POSTGRES_USER=your-db-username
+      - POSTGRES_PASSWORD=your-db-password
+    networks:
+      - lavanet-network
+    ports:
+      - "5432:5432"
+
+networks:
+  lavanet-network:
+    driver: bridge
